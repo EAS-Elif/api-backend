@@ -4,9 +4,7 @@ FROM node
 WORKDIR /usr/src/app
 # Install app dependencies
 #COPY . /usr/src/app/
-COPY tasks.js ./
-COPY package.json ./
-COPY package-lock.json ./
+COPY . ./
 # Install package-lock.json and node_modules defined in the dependencies section of the package.json file
 RUN npm install
 # Bundle app source
