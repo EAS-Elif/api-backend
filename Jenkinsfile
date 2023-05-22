@@ -3,7 +3,7 @@ pipeline{
     agent any
     
     environment {
-        DOCKERHUB_CREDENTIALS=credentials( 'elif-dockerhub')
+        DOCKERHUB_CREDENTIALS=credentials( 'jenkins-dockerhub')
     }
     stages {
         
