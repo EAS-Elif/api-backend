@@ -2,9 +2,6 @@ pipeline{
     
     agent any
     
-    environment {
-        DOCKERHUB_CREDENTIALS=credentials( 'elif-dockerhub')
-    }
     stages {
         
         stage('Clone repository') {
@@ -21,17 +18,16 @@ pipeline{
             }
         }
         
-        stage('Login') {   
-            
-            steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-            }
-        }
-        
-        stage('Push') {
+        stage('Push Docker Image') {
          
             steps {
-                sh 'docker push eliferdemeas/api-backend:latest '
+                script{
+                    withCredentials([string(credentialsId: '24cecaf7-2a47-41bc-8c8f-5c6da5e4a64f', variable: 'dockerhubpwd')]) {
+                    sh 'docker login -u eliferdemeas -p ${dockerhubpwd}'
+                    sh 'docker push eliferdemeas/api-backend:latest'
+                    }
+                
+                }
             }
         }
         stage('Post') {
