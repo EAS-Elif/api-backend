@@ -2,12 +2,11 @@ pipeline{
     
     agent any
     
-<<<<<<< HEAD
-=======
+
     environment {
         DOCKERHUB_CREDENTIALS=credentials( 'jenkins-dockerhub')
     }
->>>>>>> refs/remotes/origin/main
+
     stages {
         
         stage('Clone repository') {
