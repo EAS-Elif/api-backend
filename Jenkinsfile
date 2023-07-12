@@ -22,19 +22,19 @@ pipeline{
             stage('Build image'){
                 steps{
                 
-                    sh 'docker build -t docker http://172.16.2.59:8081/repository/elif-docker/'
+                    sh 'docker build  -t 172.16.2.64:8082/elif-docker/elif:docker .'
                 
                 }
             }
             stage('Trivy'){
                 steps{
-                    sh 'trivy image elif:docker'
+                    sh 'trivy image 172.16.2.64:8082/elif-docker/elif:docker'
                 }
             }
             stage('Login') {
                 steps{
                     withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                        sh 'docker login https://172.16.2.59:8082 -u $USERNAME -p $PASSWORD'
+                        sh 'docker login https://172.16.2.64:8082 -u $USERNAME -p $PASSWORD'
 
                     }
                 }
@@ -42,7 +42,7 @@ pipeline{
             stage('Push') {
                 steps{
 
-                    sh 'docker push elif:docker '
+                    sh 'docker push 172.16.2.64:8082/elif-docker/elif:docker '
                 }
             }
         }
